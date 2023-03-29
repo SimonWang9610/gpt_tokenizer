@@ -2,7 +2,7 @@ import 'dart:ffi';
 import 'dart:io';
 
 DynamicLibrary createLibraryImpl() {
-  const base = 'tokenizer';
+  const base = 'gpt_tokenizer';
 
   if (Platform.isIOS || Platform.isMacOS) {
     return DynamicLibrary.executable();

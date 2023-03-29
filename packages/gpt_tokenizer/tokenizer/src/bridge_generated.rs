@@ -21,7 +21,7 @@ use std::sync::Arc;
 
 // Section: wire functions
 
-fn wire_create_static__static_method__BPEWrapper_impl(
+fn wire_create__static_method__BPEWrapper_impl(
     port_: MessagePort,
     encoder_entries: impl Wire2Api<Vec<EncoderMapEntry>> + UnwindSafe,
     special_tokens_encoder_entries: impl Wire2Api<Vec<SpecialEncoderMapEntry>> + UnwindSafe,
@@ -29,7 +29,7 @@ fn wire_create_static__static_method__BPEWrapper_impl(
 ) {
     FLUTTER_RUST_BRIDGE_HANDLER.wrap(
         WrapInfo {
-            debug_name: "create_static__static_method__BPEWrapper",
+            debug_name: "create__static_method__BPEWrapper",
             port: Some(port_),
             mode: FfiCallMode::Normal,
         },
@@ -38,7 +38,7 @@ fn wire_create_static__static_method__BPEWrapper_impl(
             let api_special_tokens_encoder_entries = special_tokens_encoder_entries.wire2api();
             let api_pattern = pattern.wire2api();
             move |task_callback| {
-                Ok(BPEWrapper::create_static(
+                Ok(BPEWrapper::create(
                     api_encoder_entries,
                     api_special_tokens_encoder_entries,
                     api_pattern,
@@ -268,13 +268,13 @@ mod web {
     // Section: wire functions
 
     #[wasm_bindgen]
-    pub fn wire_create_static__static_method__BPEWrapper(
+    pub fn wire_create__static_method__BPEWrapper(
         port_: MessagePort,
         encoder_entries: JsValue,
         special_tokens_encoder_entries: JsValue,
         pattern: String,
     ) {
-        wire_create_static__static_method__BPEWrapper_impl(
+        wire_create__static_method__BPEWrapper_impl(
             port_,
             encoder_entries,
             special_tokens_encoder_entries,
@@ -518,13 +518,13 @@ mod io {
     // Section: wire functions
 
     #[no_mangle]
-    pub extern "C" fn wire_create_static__static_method__BPEWrapper(
+    pub extern "C" fn wire_create__static_method__BPEWrapper(
         port_: i64,
         encoder_entries: *mut wire_list_encoder_map_entry,
         special_tokens_encoder_entries: *mut wire_list_special_encoder_map_entry,
         pattern: *mut wire_uint_8_list,
     ) {
-        wire_create_static__static_method__BPEWrapper_impl(
+        wire_create__static_method__BPEWrapper_impl(
             port_,
             encoder_entries,
             special_tokens_encoder_entries,

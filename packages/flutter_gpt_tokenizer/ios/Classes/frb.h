@@ -64,10 +64,10 @@ uintptr_t new_dart_opaque(Dart_Handle handle);
 
 intptr_t init_frb_dart_api_dl(void *obj);
 
-void wire_create_static__static_method__BPEWrapper(int64_t port_,
-                                                   struct wire_list_encoder_map_entry *encoder_entries,
-                                                   struct wire_list_special_encoder_map_entry *special_tokens_encoder_entries,
-                                                   struct wire_uint_8_list *pattern);
+void wire_create__static_method__BPEWrapper(int64_t port_,
+                                            struct wire_list_encoder_map_entry *encoder_entries,
+                                            struct wire_list_special_encoder_map_entry *special_tokens_encoder_entries,
+                                            struct wire_uint_8_list *pattern);
 
 void wire_encode_ordinary__method__BPEWrapper(int64_t port_,
                                               struct wire_BPEWrapper *that,
@@ -125,7 +125,7 @@ void free_WireSyncReturn(WireSyncReturn ptr);
 
 static int64_t dummy_method_to_enforce_bundling(void) {
     int64_t dummy_var = 0;
-    dummy_var ^= ((int64_t) (void*) wire_create_static__static_method__BPEWrapper);
+    dummy_var ^= ((int64_t) (void*) wire_create__static_method__BPEWrapper);
     dummy_var ^= ((int64_t) (void*) wire_encode_ordinary__method__BPEWrapper);
     dummy_var ^= ((int64_t) (void*) wire_encode__method__BPEWrapper);
     dummy_var ^= ((int64_t) (void*) wire_count_token__method__BPEWrapper);

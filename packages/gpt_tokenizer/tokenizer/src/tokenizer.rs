@@ -367,7 +367,7 @@ pub struct BPEWrapper {
 }
 
 impl BPEWrapper {
-    pub fn create_static(
+    pub fn create(
         encoder_entries: Vec<EncoderMapEntry>,
         special_tokens_encoder_entries: Vec<SpecialEncoderMapEntry>,
         pattern: String,

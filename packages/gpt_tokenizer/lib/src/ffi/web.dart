@@ -3,6 +3,6 @@ import 'package:flutter_rust_bridge/flutter_rust_bridge.dart';
 
 typedef ExternalLibrary = WasmModule;
 
-TokenizerImpl loadTokenizerImpl(ExternalLibrary library) {
-  return TokenizerImpl.wasm(library);
+GptTokenizerImpl loadTokenizerImpl(ExternalLibrary library) {
+  return GptTokenizerImpl.wasm(library);
 }

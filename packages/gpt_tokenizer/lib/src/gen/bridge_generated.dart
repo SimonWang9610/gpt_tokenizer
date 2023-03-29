@@ -16,15 +16,14 @@ import 'package:uuid/uuid.dart';
 import 'bridge_generated.io.dart'
     if (dart.library.html) 'bridge_generated.web.dart';
 
-abstract class Tokenizer {
-  Future<BPEWrapper> createStaticStaticMethodBpeWrapper(
+abstract class GptTokenizer {
+  Future<BPEWrapper> createStaticMethodBpeWrapper(
       {required List<EncoderMapEntry> encoderEntries,
       required List<SpecialEncoderMapEntry> specialTokensEncoderEntries,
       required String pattern,
       dynamic hint});
 
-  FlutterRustBridgeTaskConstMeta
-      get kCreateStaticStaticMethodBpeWrapperConstMeta;
+  FlutterRustBridgeTaskConstMeta get kCreateStaticMethodBpeWrapperConstMeta;
 
   Future<Uint32List> encodeOrdinaryMethodBpeWrapper(
       {required BPEWrapper that, required String text, dynamic hint});
@@ -82,7 +81,7 @@ abstract class Tokenizer {
 
 @sealed
 class ArcCoreBpe extends FrbOpaque {
-  final Tokenizer bridge;
+  final GptTokenizer bridge;
   ArcCoreBpe.fromRaw(int ptr, int size, this.bridge) : super.unsafe(ptr, size);
   @override
   DropFnType get dropFn => bridge.dropOpaqueArcCoreBpe;
@@ -95,7 +94,7 @@ class ArcCoreBpe extends FrbOpaque {
 }
 
 class BPEWrapper {
-  final Tokenizer bridge;
+  final GptTokenizer bridge;
   final ArcCoreBpe bpe;
 
   const BPEWrapper({
@@ -103,13 +102,13 @@ class BPEWrapper {
     required this.bpe,
   });
 
-  static Future<BPEWrapper> createStatic(
-          {required Tokenizer bridge,
+  static Future<BPEWrapper> create(
+          {required GptTokenizer bridge,
           required List<EncoderMapEntry> encoderEntries,
           required List<SpecialEncoderMapEntry> specialTokensEncoderEntries,
           required String pattern,
           dynamic hint}) =>
-      bridge.createStaticStaticMethodBpeWrapper(
+      bridge.createStaticMethodBpeWrapper(
           encoderEntries: encoderEntries,
           specialTokensEncoderEntries: specialTokensEncoderEntries,
           pattern: pattern,
@@ -194,16 +193,16 @@ class SpecialEncoderMapEntry {
   });
 }
 
-class TokenizerImpl implements Tokenizer {
-  final TokenizerPlatform _platform;
-  factory TokenizerImpl(ExternalLibrary dylib) =>
-      TokenizerImpl.raw(TokenizerPlatform(dylib));
+class GptTokenizerImpl implements GptTokenizer {
+  final GptTokenizerPlatform _platform;
+  factory GptTokenizerImpl(ExternalLibrary dylib) =>
+      GptTokenizerImpl.raw(GptTokenizerPlatform(dylib));
 
   /// Only valid on web/WASM platforms.
-  factory TokenizerImpl.wasm(FutureOr<WasmModule> module) =>
-      TokenizerImpl(module as ExternalLibrary);
-  TokenizerImpl.raw(this._platform);
-  Future<BPEWrapper> createStaticStaticMethodBpeWrapper(
+  factory GptTokenizerImpl.wasm(FutureOr<WasmModule> module) =>
+      GptTokenizerImpl(module as ExternalLibrary);
+  GptTokenizerImpl.raw(this._platform);
+  Future<BPEWrapper> createStaticMethodBpeWrapper(
       {required List<EncoderMapEntry> encoderEntries,
       required List<SpecialEncoderMapEntry> specialTokensEncoderEntries,
       required String pattern,
@@ -214,25 +213,19 @@ class TokenizerImpl implements Tokenizer {
     var arg2 = _platform.api2wire_String(pattern);
     return _platform.executeNormal(FlutterRustBridgeTask(
       callFfi: (port_) => _platform.inner
-          .wire_create_static__static_method__BPEWrapper(
-              port_, arg0, arg1, arg2),
+          .wire_create__static_method__BPEWrapper(port_, arg0, arg1, arg2),
       parseSuccessData: (d) => _wire2api_bpe_wrapper(d),
-      constMeta: kCreateStaticStaticMethodBpeWrapperConstMeta,
+      constMeta: kCreateStaticMethodBpeWrapperConstMeta,
       argValues: [encoderEntries, specialTokensEncoderEntries, pattern],
       hint: hint,
     ));
   }
 
-  FlutterRustBridgeTaskConstMeta
-      get kCreateStaticStaticMethodBpeWrapperConstMeta =>
-          const FlutterRustBridgeTaskConstMeta(
-            debugName: "create_static__static_method__BPEWrapper",
-            argNames: [
-              "encoderEntries",
-              "specialTokensEncoderEntries",
-              "pattern"
-            ],
-          );
+  FlutterRustBridgeTaskConstMeta get kCreateStaticMethodBpeWrapperConstMeta =>
+      const FlutterRustBridgeTaskConstMeta(
+        debugName: "create__static_method__BPEWrapper",
+        argNames: ["encoderEntries", "specialTokensEncoderEntries", "pattern"],
+      );
 
   Future<Uint32List> encodeOrdinaryMethodBpeWrapper(
       {required BPEWrapper that, required String text, dynamic hint}) {

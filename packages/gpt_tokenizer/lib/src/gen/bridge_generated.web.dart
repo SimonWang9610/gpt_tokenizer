@@ -10,9 +10,10 @@ import 'package:uuid/uuid.dart';
 import 'bridge_generated.dart';
 export 'bridge_generated.dart';
 
-class TokenizerPlatform extends FlutterRustBridgeBase<TokenizerWire>
+class GptTokenizerPlatform extends FlutterRustBridgeBase<GptTokenizerWire>
     with FlutterRustBridgeSetupMixin {
-  TokenizerPlatform(FutureOr<WasmModule> dylib) : super(TokenizerWire(dylib)) {
+  GptTokenizerPlatform(FutureOr<WasmModule> dylib)
+      : super(GptTokenizerWire(dylib)) {
     setupMixinConstructor();
   }
   Future<void> setup() => inner.init;
@@ -85,14 +86,14 @@ class TokenizerPlatform extends FlutterRustBridgeBase<TokenizerWire>
 // Section: WASM wire module
 
 @JS('wasm_bindgen')
-external TokenizerWasmModule get wasmModule;
+external GptTokenizerWasmModule get wasmModule;
 
 @JS()
 @anonymous
-class TokenizerWasmModule implements WasmModule {
+class GptTokenizerWasmModule implements WasmModule {
   external Object /* Promise */ call([String? moduleName]);
-  external TokenizerWasmModule bind(dynamic thisArg, String moduleName);
-  external dynamic /* void */ wire_create_static__static_method__BPEWrapper(
+  external GptTokenizerWasmModule bind(dynamic thisArg, String moduleName);
+  external dynamic /* void */ wire_create__static_method__BPEWrapper(
       NativePortType port_,
       List<dynamic> encoder_entries,
       List<dynamic> special_tokens_encoder_entries,
@@ -136,16 +137,17 @@ class TokenizerWasmModule implements WasmModule {
 
 // Section: WASM wire connector
 
-class TokenizerWire extends FlutterRustBridgeWasmWireBase<TokenizerWasmModule> {
-  TokenizerWire(FutureOr<WasmModule> module)
-      : super(WasmModule.cast<TokenizerWasmModule>(module));
+class GptTokenizerWire
+    extends FlutterRustBridgeWasmWireBase<GptTokenizerWasmModule> {
+  GptTokenizerWire(FutureOr<WasmModule> module)
+      : super(WasmModule.cast<GptTokenizerWasmModule>(module));
 
-  void wire_create_static__static_method__BPEWrapper(
+  void wire_create__static_method__BPEWrapper(
           NativePortType port_,
           List<dynamic> encoder_entries,
           List<dynamic> special_tokens_encoder_entries,
           String pattern) =>
-      wasmModule.wire_create_static__static_method__BPEWrapper(
+      wasmModule.wire_create__static_method__BPEWrapper(
           port_, encoder_entries, special_tokens_encoder_entries, pattern);
 
   void wire_encode_ordinary__method__BPEWrapper(

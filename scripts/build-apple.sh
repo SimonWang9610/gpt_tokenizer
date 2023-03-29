@@ -15,8 +15,8 @@ do
 done
 
 # Create XCFramework zip
-FRAMEWORK="flutter_gpt_tokenizer.xcframework"
-LIBNAME=liblflutter_gpt_tokenizer.a
+FRAMEWORK="gpt_tokenizer.xcframework"
+LIBNAME=libgpt_tokenizer.a
 mkdir mac-lipo ios-sim-lipo
 IOS_SIM_LIPO=ios-sim-lipo/$LIBNAME
 MAC_LIPO=mac-lipo/$LIBNAME
