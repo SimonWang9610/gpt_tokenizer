@@ -1,5 +1,5 @@
 #!/bin/bash
-
+DEBUGZIP="gpt_tokenizer-v0.0.1.zip" # generated; do not edit
 # Setup
 BUILD_DIR=platform-build
 mkdir $BUILD_DIR
@@ -32,6 +32,16 @@ xcodebuild -create-xcframework \
         -library ../target/aarch64-apple-ios/release/$LIBNAME \
         -output $FRAMEWORK
 zip -r $FRAMEWORK.zip $FRAMEWORK
+
+if [ "$1" == "debug" ]; then
+# copy debug zip for debuging locally
+cp $FRAMEWORK.zip ../packages/flutter_gpt_tokenizer/ios/Frameworks/$DEBUGZIP
+cp $FRAMEWORK.zip ../packages/flutter_gpt_tokenizer/macos/Frameworks/$DEBUGZIP
+fi
+echo "Build complete. $1 mode"
+
+
+
 
 # Cleanup
 rm -rf ios-sim-lipo mac-lipo $FRAMEWORK

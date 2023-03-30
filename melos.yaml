@@ -24,6 +24,14 @@ scripts:
     run: melos run build:apple && melos run build:android && melos run build:other
     description: Build all native libraries for the project.
 
+  build:release:
+    run: melos run version && melos run build:android && melos run build:apple && melos run build:other
+    description: build binary files for all platforms
+
+  build:debug:
+    run: melos run version && melos run build:android debug && melos run build:apple debug
+    description: build android/apple binary file for local debugging
+
   build:apple:
     run: bash scripts/build-apple.sh
     description: Build the XCFramework for iOS and macOS.

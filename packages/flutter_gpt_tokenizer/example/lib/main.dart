@@ -19,25 +19,14 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final TextEditingController _controller = TextEditingController();
 
-  BPEWrapper? tokenizer;
-
-  @override
-  void initState() {
-    super.initState();
-    _initTokenizer();
-  }
-
   @override
   void dispose() {
     _controller.dispose();
+    Tokenizer().dispose();
     super.dispose();
   }
 
-  void _initTokenizer() async {
-    tokenizer = await Tokenizer.getTokenizer("gpt-4");
-  }
-
-  Uint32List? _encoded;
+  List<int>? _encoded;
   String? _decoded;
   int? _count;
 
@@ -55,10 +44,11 @@ class _MyAppState extends State<MyApp> {
               children: [
                 TextField(
                   controller: _controller,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
                     labelText: 'Text',
                     hintText: "Enter your prompt here",
+                    suffixIcon: _buildModelSelector(),
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -82,31 +72,89 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            if (tokenizer == null) return;
-
-            final text = _controller.text;
-            final encoded = await tokenizer!.encode(
-              text: text,
-              allowedSpecialEntries: const [],
-            );
-
-            final decoded = await tokenizer!.decodeBytes(tokens: encoded);
-
-            final count = await tokenizer!.countToken(
-              text: text,
-              allowedSpecialEntries: const [],
-            );
-
-            setState(() {
-              _encoded = encoded;
-              _decoded = utf8.decode(decoded);
-              _count = count;
-            });
-          },
-          child: const Text('Encode'),
+          onPressed: _encode,
+          child: const Text(
+            'Encode',
+            style: TextStyle(fontSize: 12),
+          ),
         ),
       ),
+    );
+  }
+
+  void _encodeSingleToken() async {
+    final encoded = await Tokenizer().encodeSingleToken(
+      _controller.text,
+      modelName: _currentModel,
+    );
+
+    final decoded =
+        await Tokenizer().decodeSingleToken(encoded, modelName: _currentModel);
+
+    setState(() {
+      _encoded = [encoded];
+      _decoded = decoded;
+      _count = 1;
+    });
+  }
+
+  void _encode() async {
+    final text = _controller.text;
+    final encoded = await Tokenizer().encode(
+      text,
+      modelName: _currentModel,
+    );
+
+    final decoded = await Tokenizer()
+        .decode(Uint32List.fromList(encoded), modelName: _currentModel);
+
+    final count = await Tokenizer().count(
+      text,
+      modelName: _currentModel,
+    );
+
+    setState(() {
+      _encoded = encoded;
+      _decoded = decoded;
+      _count = count;
+    });
+  }
+
+  String _currentModel = "gpt-4";
+
+  Widget _buildModelSelector() {
+    return DropdownButton<String>(
+      value: _currentModel,
+      items: const [
+        DropdownMenuItem(
+          value: "gpt-4",
+          child: Text("gpt-4"),
+        ),
+        DropdownMenuItem(
+          value: "gpt-3.5-turbo",
+          child: Text("gpt-3.5-turbo"),
+        ),
+        DropdownMenuItem(
+          value: "text-davinci-003",
+          child: Text("text-davinci-003"),
+        ),
+        DropdownMenuItem(
+          value: "text-davinci-edit-001",
+          child: Text("text-davinci-edit-001"),
+        ),
+        DropdownMenuItem(
+          value: "davinci",
+          child: Text("davinci"),
+        ),
+      ],
+      onChanged: (value) async {
+        if (value == null) return;
+
+        print("set tokenizer for: $value");
+        setState(() {
+          _currentModel = value;
+        });
+      },
     );
   }
 }

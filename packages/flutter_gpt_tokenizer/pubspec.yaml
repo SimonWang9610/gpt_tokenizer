@@ -13,6 +13,9 @@ dependencies:
     sdk: flutter
   plugin_platform_interface: ^2.0.2
   flutter_rust_bridge: ^1.72.1
+  dio: ^5.1.0
+  crypto: ^3.0.2
+  path_provider: ^2.0.14
 
   gpt_tokenizer:
     path: ../gpt_tokenizer

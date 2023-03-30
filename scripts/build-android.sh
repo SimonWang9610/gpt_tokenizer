@@ -1,5 +1,5 @@
 #!/bin/bash
-
+DEBUGZIP="gpt_tokenizer-v0.0.1.tar.gz" # generated; do not edit
 # Setup
 BUILD_DIR=platform-build
 mkdir $BUILD_DIR
@@ -29,7 +29,14 @@ cargo ndk -o $JNI_DIR \
 # Archive the dynamic libs
 cd $JNI_DIR
 tar -czvf ../android.tar.gz *
+
 cd -
+
+
+if [ "$1" == "debug" ]; then
+cp android.tar.gz ../packages/flutter_gpt_tokenizer/android/$DEBUGZIP
+fi
+echo "Build complete. $1 mode"
 
 # Cleanup
 rm -rf $JNI_DIR

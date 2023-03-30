@@ -21,7 +21,7 @@ cd -
 `
 
 Pod::Spec.new do |spec|
-  spec.name          = 'gpt_tokenizer'
+  spec.name          = 'flutter_gpt_tokenizer'
   spec.version       = '0.0.1'
   spec.license       = { :file => '../LICENSE' }
   spec.homepage      = 'https://github.com/SimonWang9610/gpt_tokenizer'

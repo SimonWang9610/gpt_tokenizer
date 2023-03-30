@@ -16,4 +16,13 @@ do
     rm packages/flutter_gpt_tokenizer/$CMAKE_PLATFORM/*.bak
 done
 
+# debug bash script
+APPLE_DEBUG_ZIP="DEBUGZIP=\"$CURR_VERSION.zip\" # generated; do not edit"
+sed -i.bak "2 s/.*/$APPLE_DEBUG_ZIP/" scripts/build-apple.sh
+
+ANDROID_DEBUG_ZIP="DEBUGZIP=\"$CURR_VERSION.tar.gz\" # generated; do not edit"
+sed -i.bak "2 s/.*/$ANDROID_DEBUG_ZIP/" scripts/build-android.sh
+
+rm scripts/*.bak
+
 git add packages/flutter_gpt_tokenizer/
