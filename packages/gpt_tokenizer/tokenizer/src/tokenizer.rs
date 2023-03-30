@@ -4,7 +4,7 @@ use std::thread;
 
 use anyhow::{Ok, Result};
 
-use flutter_rust_bridge::ffi::*;
+use flutter_rust_bridge::ffi::{RustOpaque, ZeroCopyBuffer};
 
 use fancy_regex::Regex;
 
