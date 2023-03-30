@@ -36,3 +36,6 @@ build/
 **/target/
 /Cargo.lock
 /platform-build
+
+/assets/*
+!/assets/cl100k_base.tiktoken

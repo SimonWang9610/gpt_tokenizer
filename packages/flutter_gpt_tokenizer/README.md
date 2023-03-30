@@ -1,92 +1,68 @@
 # flutter_gpt_tokenizer
 
-A new Flutter FFI plugin project.
+A package helps you encode/count/decode the tokens based on your ChatGPT prompt, so that you could know how many tokens your request would consume before sending requests to OpenAI.
 
-## Getting Started
+This package is not the official implementation from OpenAI but use the same tiktoken files and BPE algorithm from [OpenAI tiktoken(python)](https://github.com/openai/tiktoken)
 
-This project is a starting point for a Flutter
-[FFI plugin](https://docs.flutter.dev/development/platform-integration/c-interop),
-a specialized package that includes native code directly invoked with Dart FFI.
+## Features
 
-## Project stucture
+1. `encode` your prompt and return the encoded bytes
+2. `count` the tokens of your prompt but no return the encoded bytes
+3. `decode` the encoded tokens from your prompt.
 
-This template uses the following structure:
+## Usage
 
-* `src`: Contains the native source code, and a CmakeFile.txt file for building
-  that source code into a dynamic library.
+> if you only want to know the length of the tokens of your prompt, better use `Tokenizer().count`
 
-* `lib`: Contains the Dart code that defines the API of the plugin, and which
-  calls into the native code using `dart:ffi`.
+- encode your prompt
 
-* platform folders (`android`, `ios`, `windows`, etc.): Contains the build files
-  for building and bundling the native code library with the platform application.
-
-## Buidling and bundling native code
-
-The `pubspec.yaml` specifies FFI plugins as follows:
-
-```yaml
-  plugin:
-    platforms:
-      some_platform:
-        ffiPlugin: true
+```dart
+final encoded = await Tokenizer().encode(<your prompt>, modelName: "gpt-3.5-turbo");
 ```
 
-This configuration invokes the native build for the various target platforms
-and bundles the binaries in Flutter applications using these FFI plugins.
+- count the tokens of your prompt
 
-This can be combined with dartPluginClass, such as when FFI is used for the
-implementation of one platform in a federated plugin:
-
-```yaml
-  plugin:
-    implements: some_other_plugin
-    platforms:
-      some_platform:
-        dartPluginClass: SomeClass
-        ffiPlugin: true
+```dart
+final count = await Tokenizer().count(
+  <your prompt>,
+  modelName: "gpt-3.5-turbo,
+);
 ```
 
-A plugin can have both FFI and method channels:
+## Supported models:
 
-```yaml
-  plugin:
-    platforms:
-      some_platform:
-        pluginClass: SomeName
-        ffiPlugin: true
+> `gpt-4-*` and `gpt-3.5-turbo-*` are also supported
+
+```json
+  "gpt-4": "cl100k_base",
+  "gpt-3.5-turbo": "cl100k_base",
+  "text-davinci-003": "p50k_base",
+  "text-davinci-002": "p50k_base",
+  "text-davinci-001": "r50k_base",
+  "text-curie-001": "r50k_base",
+  "text-babbage-001": "r50k_base",
+  "text-ada-001": "r50k_base",
+  "davinci": "r50k_base",
+  "curie": "r50k_base",
+  "babbage": "r50k_base",
+  "ada": "r50k_base",
+  "code-davinci-002": "p50k_base",
+  "code-davinci-001": "p50k_base",
+  "code-cushman-002": "p50k_base",
+  "code-cushman-001": "p50k_base",
+  "davinci-codex": "p50k_base",
+  "cushman-codex": "p50k_base",
+  "text-davinci-edit-001": "p50k_edit",
+  "code-davinci-edit-001": "p50k_edit",
+  "text-embedding-ada-002": "cl100k_base",
+  "text-similarity-davinci-001": "r50k_base",
+  "text-similarity-curie-001": "r50k_base",
+  "text-similarity-babbage-001": "r50k_base",
+  "text-similarity-ada-001": "r50k_base",
+  "text-search-davinci-doc-001": "r50k_base",
+  "text-search-curie-doc-001": "r50k_base",
+  "text-search-babbage-doc-001": "r50k_base",
+  "text-search-ada-doc-001": "r50k_base",
+  "code-search-babbage-code-001": "r50k_base",
+  "code-search-ada-code-001": "r50k_base",
 ```
-
-The native build systems that are invoked by FFI (and method channel) plugins are:
-
-* For Android: Gradle, which invokes the Android NDK for native builds.
-  * See the documentation in android/build.gradle.
-* For iOS and MacOS: Xcode, via CocoaPods.
-  * See the documentation in ios/flutter_gpt_tokenizer.podspec.
-  * See the documentation in macos/flutter_gpt_tokenizer.podspec.
-* For Linux and Windows: CMake.
-  * See the documentation in linux/CMakeLists.txt.
-  * See the documentation in windows/CMakeLists.txt.
-
-## Binding to native code
-
-To use the native code, bindings in Dart are needed.
-To avoid writing these by hand, they are generated from the header file
-(`src/flutter_gpt_tokenizer.h`) by `package:ffigen`.
-Regenerate the bindings by running `flutter pub run ffigen --config ffigen.yaml`.
-
-## Invoking native code
-
-Very short-running native functions can be directly invoked from any isolate.
-For example, see `sum` in `lib/flutter_gpt_tokenizer.dart`.
-
-Longer-running functions should be invoked on a helper isolate to avoid
-dropping frames in Flutter applications.
-For example, see `sumAsync` in `lib/flutter_gpt_tokenizer.dart`.
-
-## Flutter help
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-

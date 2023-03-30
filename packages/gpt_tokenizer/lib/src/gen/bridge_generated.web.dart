@@ -120,9 +120,6 @@ class GptTokenizerWasmModule implements WasmModule {
   external dynamic /* void */ wire_encode_single_token__method__BPEWrapper(
       NativePortType port_, List<dynamic> that, Uint8List piece);
 
-  external dynamic /* void */ wire_encode_single_piece__method__BPEWrapper(
-      NativePortType port_, List<dynamic> that, Uint8List piece);
-
   external dynamic /* void */ wire_decode_bytes__method__BPEWrapper(
       NativePortType port_, List<dynamic> that, Uint32List tokens);
 
@@ -174,11 +171,6 @@ class GptTokenizerWire
   void wire_encode_single_token__method__BPEWrapper(
           NativePortType port_, List<dynamic> that, Uint8List piece) =>
       wasmModule.wire_encode_single_token__method__BPEWrapper(
-          port_, that, piece);
-
-  void wire_encode_single_piece__method__BPEWrapper(
-          NativePortType port_, List<dynamic> that, Uint8List piece) =>
-      wasmModule.wire_encode_single_piece__method__BPEWrapper(
           port_, that, piece);
 
   void wire_decode_bytes__method__BPEWrapper(

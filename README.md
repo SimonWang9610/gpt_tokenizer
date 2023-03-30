@@ -1,0 +1,1 @@
+- `cargo build` only re-run `tokenizer/build.rs` when the symbols are changed

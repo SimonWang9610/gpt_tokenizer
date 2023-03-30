@@ -363,28 +363,6 @@ class GptTokenizerWire implements FlutterRustBridgeWireBase {
           void Function(int, ffi.Pointer<wire_BPEWrapper>,
               ffi.Pointer<wire_uint_8_list>)>();
 
-  void wire_encode_single_piece__method__BPEWrapper(
-    int port_,
-    ffi.Pointer<wire_BPEWrapper> that,
-    ffi.Pointer<wire_uint_8_list> piece,
-  ) {
-    return _wire_encode_single_piece__method__BPEWrapper(
-      port_,
-      that,
-      piece,
-    );
-  }
-
-  late final _wire_encode_single_piece__method__BPEWrapperPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Void Function(ffi.Int64, ffi.Pointer<wire_BPEWrapper>,
-                  ffi.Pointer<wire_uint_8_list>)>>(
-      'wire_encode_single_piece__method__BPEWrapper');
-  late final _wire_encode_single_piece__method__BPEWrapper =
-      _wire_encode_single_piece__method__BPEWrapperPtr.asFunction<
-          void Function(int, ffi.Pointer<wire_BPEWrapper>,
-              ffi.Pointer<wire_uint_8_list>)>();
-
   void wire_decode_bytes__method__BPEWrapper(
     int port_,
     ffi.Pointer<wire_BPEWrapper> that,

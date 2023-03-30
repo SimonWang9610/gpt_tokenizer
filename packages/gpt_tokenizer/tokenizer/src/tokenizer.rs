@@ -318,13 +318,6 @@ impl CoreBPE {
         tokens: Vec<usize>,
         mut last_piece_token_len: usize,
     ) -> (Vec<usize>, usize) {
-        // Unfortunately, the locations where our regex splits can be unstable.
-        // For the purposes of determining unstable tokens, unstable regex splitting
-        // is only a problem if a split that was present disappears, since this can
-        // lead to merging of tokens otherwise thought to be stable.
-        // cl100k_base makes our life hard by including the \s*[\r\n]+
-        // pattern. This can e.g. cause "\n" + " " to become "\n \n".
-        // Here is a quick and dirty fix:
         {
             let token_is_all_space = |token| {
                 self.decoder
@@ -511,12 +504,12 @@ impl BPEWrapper {
         panic!("Piece not found in the vocabulary: {:?}", piece);
     }
 
-    pub fn encode_single_piece(&self, piece: Vec<u8>) -> ZeroCopyBuffer<Vec<u32>> {
-        if let Some(token) = self.bpe.encoder.get(&piece) {
-            return cast_to_u32_vec(vec![*token]);
-        }
-        cast_to_u32_vec(byte_pair_encode(&piece, &self.bpe.encoder))
-    }
+    // pub fn encode_single_piece(&self, piece: Vec<u8>) -> ZeroCopyBuffer<Vec<u32>> {
+    //     if let Some(token) = self.bpe.encoder.get(&piece) {
+    //         return cast_to_u32_vec(vec![*token]);
+    //     }
+    //     cast_to_u32_vec(byte_pair_encode(&piece, &self.bpe.encoder))
+    // }
 
     pub fn decode_bytes(&self, tokens: Vec<u32>) -> ZeroCopyBuffer<Vec<u8>> {
         let bytes = self.bpe._decode_native(&cast_to_usize_vec(tokens));

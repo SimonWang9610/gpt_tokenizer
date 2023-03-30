@@ -49,6 +49,7 @@ class Tokenizer {
   final _cache = <String, BPEWrapper>{};
 
   /// encode the given [text] using the tokenizer for the given [modelName]
+  /// [text] must be utf8 encode
   Future<List<int>> encode(
     String text, {
     required String modelName,

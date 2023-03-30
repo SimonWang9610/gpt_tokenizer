@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -88,6 +87,8 @@ class _MyAppState extends State<MyApp> {
       modelName: _currentModel,
     );
 
+    _controller.clear();
+
     final decoded =
         await Tokenizer().decodeSingleToken(encoded, modelName: _currentModel);
 
@@ -100,6 +101,7 @@ class _MyAppState extends State<MyApp> {
 
   void _encode() async {
     final text = _controller.text;
+    _controller.clear();
     final encoded = await Tokenizer().encode(
       text,
       modelName: _currentModel,

@@ -91,10 +91,6 @@ void wire_encode_single_token__method__BPEWrapper(int64_t port_,
                                                   struct wire_BPEWrapper *that,
                                                   struct wire_uint_8_list *piece);
 
-void wire_encode_single_piece__method__BPEWrapper(int64_t port_,
-                                                  struct wire_BPEWrapper *that,
-                                                  struct wire_uint_8_list *piece);
-
 void wire_decode_bytes__method__BPEWrapper(int64_t port_,
                                            struct wire_BPEWrapper *that,
                                            struct wire_uint_32_list *tokens);
@@ -131,7 +127,6 @@ static int64_t dummy_method_to_enforce_bundling(void) {
     dummy_var ^= ((int64_t) (void*) wire_count_token__method__BPEWrapper);
     dummy_var ^= ((int64_t) (void*) wire_encode_bytes__method__BPEWrapper);
     dummy_var ^= ((int64_t) (void*) wire_encode_single_token__method__BPEWrapper);
-    dummy_var ^= ((int64_t) (void*) wire_encode_single_piece__method__BPEWrapper);
     dummy_var ^= ((int64_t) (void*) wire_decode_bytes__method__BPEWrapper);
     dummy_var ^= ((int64_t) (void*) wire_decode_single_token_bytes__method__BPEWrapper);
     dummy_var ^= ((int64_t) (void*) new_ArcCoreBpe);

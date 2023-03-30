@@ -153,24 +153,6 @@ fn wire_encode_single_token__method__BPEWrapper_impl(
         },
     )
 }
-fn wire_encode_single_piece__method__BPEWrapper_impl(
-    port_: MessagePort,
-    that: impl Wire2Api<BPEWrapper> + UnwindSafe,
-    piece: impl Wire2Api<Vec<u8>> + UnwindSafe,
-) {
-    FLUTTER_RUST_BRIDGE_HANDLER.wrap(
-        WrapInfo {
-            debug_name: "encode_single_piece__method__BPEWrapper",
-            port: Some(port_),
-            mode: FfiCallMode::Normal,
-        },
-        move || {
-            let api_that = that.wire2api();
-            let api_piece = piece.wire2api();
-            move |task_callback| Ok(BPEWrapper::encode_single_piece(&api_that, api_piece))
-        },
-    )
-}
 fn wire_decode_bytes__method__BPEWrapper_impl(
     port_: MessagePort,
     that: impl Wire2Api<BPEWrapper> + UnwindSafe,
@@ -327,15 +309,6 @@ mod web {
         piece: Box<[u8]>,
     ) {
         wire_encode_single_token__method__BPEWrapper_impl(port_, that, piece)
-    }
-
-    #[wasm_bindgen]
-    pub fn wire_encode_single_piece__method__BPEWrapper(
-        port_: MessagePort,
-        that: JsValue,
-        piece: Box<[u8]>,
-    ) {
-        wire_encode_single_piece__method__BPEWrapper_impl(port_, that, piece)
     }
 
     #[wasm_bindgen]
@@ -577,15 +550,6 @@ mod io {
         piece: *mut wire_uint_8_list,
     ) {
         wire_encode_single_token__method__BPEWrapper_impl(port_, that, piece)
-    }
-
-    #[no_mangle]
-    pub extern "C" fn wire_encode_single_piece__method__BPEWrapper(
-        port_: i64,
-        that: *mut wire_BPEWrapper,
-        piece: *mut wire_uint_8_list,
-    ) {
-        wire_encode_single_piece__method__BPEWrapper_impl(port_, that, piece)
     }
 
     #[no_mangle]

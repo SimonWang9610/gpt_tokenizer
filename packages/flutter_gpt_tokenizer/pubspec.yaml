@@ -1,11 +1,11 @@
 name: flutter_gpt_tokenizer
-description: A new Flutter FFI plugin project.
+description: Counting the tokens for your ChatGPT prompt.
 version: 0.0.1
 publish_to: none
 homepage:
 
 environment:
-  sdk: ">=2.19.2 <3.0.0"
+  sdk: ">=2.18.0 <3.0.0"
   flutter: ">=2.11.0"
 
 dependencies:

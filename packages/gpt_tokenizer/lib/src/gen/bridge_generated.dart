@@ -57,12 +57,6 @@ abstract class GptTokenizer {
   FlutterRustBridgeTaskConstMeta
       get kEncodeSingleTokenMethodBpeWrapperConstMeta;
 
-  Future<Uint32List> encodeSinglePieceMethodBpeWrapper(
-      {required BPEWrapper that, required Uint8List piece, dynamic hint});
-
-  FlutterRustBridgeTaskConstMeta
-      get kEncodeSinglePieceMethodBpeWrapperConstMeta;
-
   Future<Uint8List> decodeBytesMethodBpeWrapper(
       {required BPEWrapper that, required Uint32List tokens, dynamic hint});
 
@@ -148,13 +142,6 @@ class BPEWrapper {
 
   Future<int> encodeSingleToken({required Uint8List piece, dynamic hint}) =>
       bridge.encodeSingleTokenMethodBpeWrapper(
-        that: this,
-        piece: piece,
-      );
-
-  Future<Uint32List> encodeSinglePiece(
-          {required Uint8List piece, dynamic hint}) =>
-      bridge.encodeSinglePieceMethodBpeWrapper(
         that: this,
         piece: piece,
       );
@@ -333,27 +320,6 @@ class GptTokenizerImpl implements GptTokenizer {
       get kEncodeSingleTokenMethodBpeWrapperConstMeta =>
           const FlutterRustBridgeTaskConstMeta(
             debugName: "encode_single_token__method__BPEWrapper",
-            argNames: ["that", "piece"],
-          );
-
-  Future<Uint32List> encodeSinglePieceMethodBpeWrapper(
-      {required BPEWrapper that, required Uint8List piece, dynamic hint}) {
-    var arg0 = _platform.api2wire_box_autoadd_bpe_wrapper(that);
-    var arg1 = _platform.api2wire_uint_8_list(piece);
-    return _platform.executeNormal(FlutterRustBridgeTask(
-      callFfi: (port_) => _platform.inner
-          .wire_encode_single_piece__method__BPEWrapper(port_, arg0, arg1),
-      parseSuccessData: _wire2api_ZeroCopyBuffer_Uint32List,
-      constMeta: kEncodeSinglePieceMethodBpeWrapperConstMeta,
-      argValues: [that, piece],
-      hint: hint,
-    ));
-  }
-
-  FlutterRustBridgeTaskConstMeta
-      get kEncodeSinglePieceMethodBpeWrapperConstMeta =>
-          const FlutterRustBridgeTaskConstMeta(
-            debugName: "encode_single_piece__method__BPEWrapper",
             argNames: ["that", "piece"],
           );
 
