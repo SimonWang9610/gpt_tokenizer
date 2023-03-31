@@ -1,11 +1,18 @@
 #!/bin/bash
 
+VERSION_NUM=`awk '/^version: /{print $2}' packages/gpt_tokenizer/pubspec.yaml`
 CURR_VERSION=gpt_tokenizer-v`awk '/^version: /{print $2}' packages/gpt_tokenizer/pubspec.yaml`
 
 # iOS & macOS
 APPLE_HEADER="release_tag_name = '$CURR_VERSION' # generated; do not edit"
 sed -i.bak "1 s/.*/$APPLE_HEADER/" packages/flutter_gpt_tokenizer/ios/flutter_gpt_tokenizer.podspec
 sed -i.bak "1 s/.*/$APPLE_HEADER/" packages/flutter_gpt_tokenizer/macos/flutter_gpt_tokenizer.podspec
+
+# set pod spec.version
+APPLE_POD_VERSION="release_pod_version = '$VERSION_NUM' # generated; do not edit"
+sed -i.bak "2 s/.*/$APPLE_POD_VERSION/" packages/flutter_gpt_tokenizer/ios/flutter_gpt_tokenizer.podspec
+sed -i.bak "2 s/.*/$APPLE_POD_VERSION/" packages/flutter_gpt_tokenizer/macos/flutter_gpt_tokenizer.podspec
+
 rm packages/flutter_gpt_tokenizer/macos/*.bak packages/flutter_gpt_tokenizer/ios/*.bak
 
 # CMake platforms (Linux, Windows, and Android)

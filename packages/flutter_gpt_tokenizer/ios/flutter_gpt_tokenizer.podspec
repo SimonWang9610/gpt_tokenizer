@@ -1,5 +1,5 @@
 release_tag_name = 'gpt_tokenizer-v0.0.1' # generated; do not edit
-
+release_pod_version = '0.0.1' # generated; do not edit
 # We cannot distribute the XCFramework alongside the library directly,
 # so we have to fetch the correct version here.
 framework_name = 'gpt_tokenizer.xcframework'
@@ -22,7 +22,7 @@ cd -
 
 Pod::Spec.new do |spec|
   spec.name          = 'flutter_gpt_tokenizer'
-  spec.version       = '0.0.1'
+  spec.version       = "#{release_pod_version}"
   spec.license       = { :file => '../LICENSE' }
   spec.homepage      = 'https://github.com/SimonWang9610/gpt_tokenizer'
   spec.authors       = { 'SimonWang' => 'dengpan9610.wang@gmail.com' }
