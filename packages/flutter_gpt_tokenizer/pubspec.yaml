@@ -21,7 +21,7 @@ dependencies:
     git:
       url: https://github.com/SimonWang9610/gpt_tokenizer
       path: packages/gpt_tokenizer
-      ref: main
+      ref: bc34bf999c2d8e84cc158d476173dccfa6f0cc33
 
   # gpt_tokenizer:
   #   path: ../gpt_tokenizer
