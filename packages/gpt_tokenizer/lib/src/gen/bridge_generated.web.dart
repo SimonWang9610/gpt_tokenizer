@@ -21,7 +21,7 @@ class GptTokenizerPlatform extends FlutterRustBridgeBase<GptTokenizerWire>
 // Section: api2wire
 
   @protected
-  Object api2wire_ArcCoreBpe(ArcCoreBpe raw) {
+  Object api2wire_CoreBpe(CoreBpe raw) {
     return raw.shareOrMove();
   }
 
@@ -42,7 +42,7 @@ class GptTokenizerPlatform extends FlutterRustBridgeBase<GptTokenizerWire>
 
   @protected
   List<dynamic> api2wire_bpe_wrapper(BPEWrapper raw) {
-    return [api2wire_ArcCoreBpe(raw.bpe)];
+    return [api2wire_CoreBpe(raw.bpe)];
   }
 
   @protected
@@ -78,9 +78,9 @@ class GptTokenizerPlatform extends FlutterRustBridgeBase<GptTokenizerWire>
 
 // Section: finalizer
 
-  late final Finalizer<PlatformPointer> _ArcCoreBpeFinalizer =
-      Finalizer<PlatformPointer>(inner.drop_opaque_ArcCoreBpe);
-  Finalizer<PlatformPointer> get ArcCoreBpeFinalizer => _ArcCoreBpeFinalizer;
+  late final Finalizer<PlatformPointer> _CoreBpeFinalizer =
+      Finalizer<PlatformPointer>(inner.drop_opaque_CoreBpe);
+  Finalizer<PlatformPointer> get CoreBpeFinalizer => _CoreBpeFinalizer;
 }
 
 // Section: WASM wire module
@@ -96,6 +96,12 @@ class GptTokenizerWasmModule implements WasmModule {
   external dynamic /* void */ wire_create__static_method__BPEWrapper(
       NativePortType port_,
       List<dynamic> encoder_entries,
+      List<dynamic> special_tokens_encoder_entries,
+      String pattern);
+
+  external dynamic /* void */ wire_load__static_method__BPEWrapper(
+      NativePortType port_,
+      String path,
       List<dynamic> special_tokens_encoder_entries,
       String pattern);
 
@@ -127,9 +133,9 @@ class GptTokenizerWasmModule implements WasmModule {
       wire_decode_single_token_bytes__method__BPEWrapper(
           NativePortType port_, List<dynamic> that, int token);
 
-  external dynamic /*  */ drop_opaque_ArcCoreBpe(ptr);
+  external dynamic /*  */ drop_opaque_CoreBpe(ptr);
 
-  external int /* *const c_void */ share_opaque_ArcCoreBpe(ptr);
+  external int /* *const c_void */ share_opaque_CoreBpe(ptr);
 }
 
 // Section: WASM wire connector
@@ -146,6 +152,11 @@ class GptTokenizerWire
           String pattern) =>
       wasmModule.wire_create__static_method__BPEWrapper(
           port_, encoder_entries, special_tokens_encoder_entries, pattern);
+
+  void wire_load__static_method__BPEWrapper(NativePortType port_, String path,
+          List<dynamic> special_tokens_encoder_entries, String pattern) =>
+      wasmModule.wire_load__static_method__BPEWrapper(
+          port_, path, special_tokens_encoder_entries, pattern);
 
   void wire_encode_ordinary__method__BPEWrapper(
           NativePortType port_, List<dynamic> that, String text) =>
@@ -182,9 +193,9 @@ class GptTokenizerWire
       wasmModule.wire_decode_single_token_bytes__method__BPEWrapper(
           port_, that, token);
 
-  dynamic /*  */ drop_opaque_ArcCoreBpe(ptr) =>
-      wasmModule.drop_opaque_ArcCoreBpe(ptr);
+  dynamic /*  */ drop_opaque_CoreBpe(ptr) =>
+      wasmModule.drop_opaque_CoreBpe(ptr);
 
-  int /* *const c_void */ share_opaque_ArcCoreBpe(ptr) =>
-      wasmModule.share_opaque_ArcCoreBpe(ptr);
+  int /* *const c_void */ share_opaque_CoreBpe(ptr) =>
+      wasmModule.share_opaque_CoreBpe(ptr);
 }

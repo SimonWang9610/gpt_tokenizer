@@ -1,6 +1,10 @@
 use std::collections::HashSet;
-use std::sync::Arc;
 use std::thread;
+
+use std::fs::File;
+use std::io::{BufRead, BufReader};
+
+use base64::decode;
 
 use anyhow::{Ok, Result};
 
@@ -356,7 +360,7 @@ pub struct SpecialEncoderMapEntry {
 }
 
 pub struct BPEWrapper {
-    pub bpe: RustOpaque<Arc<CoreBPE>>,
+    pub bpe: RustOpaque<CoreBPE>,
 }
 
 impl BPEWrapper {
@@ -375,13 +379,48 @@ impl BPEWrapper {
             HashMap::from_iter(encoder_entries.into_iter().map(|e| (e.key, e.value)));
 
         BPEWrapper {
-            bpe: RustOpaque::new(Arc::new(CoreBPE::new(
-                encoder,
-                special_tokens_encoder,
-                &pattern,
-            ))),
+            bpe: RustOpaque::new(CoreBPE::new(encoder, special_tokens_encoder, &pattern)),
         }
     }
+
+    pub fn load(
+        path: String,
+        special_tokens_encoder_entries: Vec<SpecialEncoderMapEntry>,
+        pattern: String,
+    ) -> BPEWrapper {
+        let special_tokens_encoder: HashMap<String, usize> = HashMap::from_iter(
+            special_tokens_encoder_entries
+                .into_iter()
+                .map(|e| (e.key, e.value)),
+        );
+
+        let encoder: HashMap<Vec<u8>, usize> =
+            HashMap::from_iter(read_lines(&path).into_iter().map(|e| (e.key, e.value)));
+
+        BPEWrapper {
+            bpe: RustOpaque::new(CoreBPE::new(encoder, special_tokens_encoder, &pattern)),
+        }
+    }
+}
+
+fn read_lines(filepath: &str) -> Vec<EncoderMapEntry> {
+    let file = File::open(filepath).expect(format!("Unable to open file {}", filepath).as_str());
+    let lines = BufReader::new(file).lines();
+
+    let mut encoder_entries: Vec<EncoderMapEntry> = Vec::new();
+
+    for line in lines {
+        if let Result::Ok(line) = line {
+            let split: Vec<&str> = line.split_whitespace().collect();
+            let encoder_entry = EncoderMapEntry {
+                key: decode(split[0]).unwrap(),
+                value: split[1].parse::<usize>().unwrap(),
+            };
+
+            encoder_entries.push(encoder_entry);
+        }
+    }
+    encoder_entries
 }
 
 fn cast_to_u32_vec(input: Vec<usize>) -> ZeroCopyBuffer<Vec<u32>> {
@@ -394,19 +433,6 @@ fn cast_to_u8_vec(v: Vec<usize>) -> ZeroCopyBuffer<Vec<u8>> {
 
 fn cast_to_usize_vec(v: Vec<u32>) -> Vec<usize> {
     v.into_iter().map(|x| x as usize).collect()
-}
-
-fn _thread_executor<F, R>(f: F) -> R
-where
-    F: FnOnce() -> R + Send + 'static,
-    R: Send + 'static,
-{
-    let (tx, rx) = std::sync::mpsc::channel();
-    std::thread::spawn(move || {
-        let res = f();
-        tx.send(res).unwrap();
-    });
-    rx.recv().unwrap()
 }
 
 impl BPEWrapper {

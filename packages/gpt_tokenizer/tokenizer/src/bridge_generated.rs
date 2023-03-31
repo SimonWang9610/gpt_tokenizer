@@ -47,6 +47,32 @@ fn wire_create__static_method__BPEWrapper_impl(
         },
     )
 }
+fn wire_load__static_method__BPEWrapper_impl(
+    port_: MessagePort,
+    path: impl Wire2Api<String> + UnwindSafe,
+    special_tokens_encoder_entries: impl Wire2Api<Vec<SpecialEncoderMapEntry>> + UnwindSafe,
+    pattern: impl Wire2Api<String> + UnwindSafe,
+) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap(
+        WrapInfo {
+            debug_name: "load__static_method__BPEWrapper",
+            port: Some(port_),
+            mode: FfiCallMode::Normal,
+        },
+        move || {
+            let api_path = path.wire2api();
+            let api_special_tokens_encoder_entries = special_tokens_encoder_entries.wire2api();
+            let api_pattern = pattern.wire2api();
+            move |task_callback| {
+                Ok(BPEWrapper::load(
+                    api_path,
+                    api_special_tokens_encoder_entries,
+                    api_pattern,
+                ))
+            }
+        },
+    )
+}
 fn wire_encode_ordinary__method__BPEWrapper_impl(
     port_: MessagePort,
     that: impl Wire2Api<BPEWrapper> + UnwindSafe,
@@ -265,6 +291,21 @@ mod web {
     }
 
     #[wasm_bindgen]
+    pub fn wire_load__static_method__BPEWrapper(
+        port_: MessagePort,
+        path: String,
+        special_tokens_encoder_entries: JsValue,
+        pattern: String,
+    ) {
+        wire_load__static_method__BPEWrapper_impl(
+            port_,
+            path,
+            special_tokens_encoder_entries,
+            pattern,
+        )
+    }
+
+    #[wasm_bindgen]
     pub fn wire_encode_ordinary__method__BPEWrapper(
         port_: MessagePort,
         that: JsValue,
@@ -334,16 +375,16 @@ mod web {
     // Section: related functions
 
     #[wasm_bindgen]
-    pub fn drop_opaque_ArcCoreBpe(ptr: *const c_void) {
+    pub fn drop_opaque_CoreBpe(ptr: *const c_void) {
         unsafe {
-            Arc::<Arc<CoreBPE>>::decrement_strong_count(ptr as _);
+            Arc::<CoreBPE>::decrement_strong_count(ptr as _);
         }
     }
 
     #[wasm_bindgen]
-    pub fn share_opaque_ArcCoreBpe(ptr: *const c_void) -> *const c_void {
+    pub fn share_opaque_CoreBpe(ptr: *const c_void) -> *const c_void {
         unsafe {
-            Arc::<Arc<CoreBPE>>::increment_strong_count(ptr as _);
+            Arc::<CoreBPE>::increment_strong_count(ptr as _);
             ptr
         }
     }
@@ -441,8 +482,8 @@ mod web {
 
     // Section: impl Wire2Api for JsValue
 
-    impl Wire2Api<RustOpaque<Arc<CoreBPE>>> for JsValue {
-        fn wire2api(self) -> RustOpaque<Arc<CoreBPE>> {
+    impl Wire2Api<RustOpaque<CoreBPE>> for JsValue {
+        fn wire2api(self) -> RustOpaque<CoreBPE> {
             #[cfg(target_pointer_width = "64")]
             {
                 compile_error!("64-bit pointers are not supported.");
@@ -500,6 +541,21 @@ mod io {
         wire_create__static_method__BPEWrapper_impl(
             port_,
             encoder_entries,
+            special_tokens_encoder_entries,
+            pattern,
+        )
+    }
+
+    #[no_mangle]
+    pub extern "C" fn wire_load__static_method__BPEWrapper(
+        port_: i64,
+        path: *mut wire_uint_8_list,
+        special_tokens_encoder_entries: *mut wire_list_special_encoder_map_entry,
+        pattern: *mut wire_uint_8_list,
+    ) {
+        wire_load__static_method__BPEWrapper_impl(
+            port_,
+            path,
             special_tokens_encoder_entries,
             pattern,
         )
@@ -573,8 +629,8 @@ mod io {
     // Section: allocate functions
 
     #[no_mangle]
-    pub extern "C" fn new_ArcCoreBpe() -> wire_ArcCoreBpe {
-        wire_ArcCoreBpe::new_with_null_ptr()
+    pub extern "C" fn new_CoreBpe() -> wire_CoreBpe {
+        wire_CoreBpe::new_with_null_ptr()
     }
 
     #[no_mangle]
@@ -632,24 +688,24 @@ mod io {
     // Section: related functions
 
     #[no_mangle]
-    pub extern "C" fn drop_opaque_ArcCoreBpe(ptr: *const c_void) {
+    pub extern "C" fn drop_opaque_CoreBpe(ptr: *const c_void) {
         unsafe {
-            Arc::<Arc<CoreBPE>>::decrement_strong_count(ptr as _);
+            Arc::<CoreBPE>::decrement_strong_count(ptr as _);
         }
     }
 
     #[no_mangle]
-    pub extern "C" fn share_opaque_ArcCoreBpe(ptr: *const c_void) -> *const c_void {
+    pub extern "C" fn share_opaque_CoreBpe(ptr: *const c_void) -> *const c_void {
         unsafe {
-            Arc::<Arc<CoreBPE>>::increment_strong_count(ptr as _);
+            Arc::<CoreBPE>::increment_strong_count(ptr as _);
             ptr
         }
     }
 
     // Section: impl Wire2Api
 
-    impl Wire2Api<RustOpaque<Arc<CoreBPE>>> for wire_ArcCoreBpe {
-        fn wire2api(self) -> RustOpaque<Arc<CoreBPE>> {
+    impl Wire2Api<RustOpaque<CoreBPE>> for wire_CoreBpe {
+        fn wire2api(self) -> RustOpaque<CoreBPE> {
             unsafe { support::opaque_from_dart(self.ptr as _) }
         }
     }
@@ -737,7 +793,7 @@ mod io {
 
     #[repr(C)]
     #[derive(Clone)]
-    pub struct wire_ArcCoreBpe {
+    pub struct wire_CoreBpe {
         ptr: *const core::ffi::c_void,
     }
 
@@ -751,7 +807,7 @@ mod io {
     #[repr(C)]
     #[derive(Clone)]
     pub struct wire_BPEWrapper {
-        bpe: wire_ArcCoreBpe,
+        bpe: wire_CoreBpe,
     }
 
     #[repr(C)]
@@ -808,7 +864,7 @@ mod io {
         }
     }
 
-    impl NewWithNullPtr for wire_ArcCoreBpe {
+    impl NewWithNullPtr for wire_CoreBpe {
         fn new_with_null_ptr() -> Self {
             Self {
                 ptr: core::ptr::null(),
@@ -819,7 +875,7 @@ mod io {
     impl NewWithNullPtr for wire_BPEWrapper {
         fn new_with_null_ptr() -> Self {
             Self {
-                bpe: wire_ArcCoreBpe::new_with_null_ptr(),
+                bpe: wire_CoreBpe::new_with_null_ptr(),
             }
         }
     }

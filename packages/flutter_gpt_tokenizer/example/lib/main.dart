@@ -101,7 +101,6 @@ class _MyAppState extends State<MyApp> {
 
   void _encode() async {
     final text = _controller.text;
-    _controller.clear();
     final encoded = await Tokenizer().encode(
       text,
       modelName: _currentModel,
