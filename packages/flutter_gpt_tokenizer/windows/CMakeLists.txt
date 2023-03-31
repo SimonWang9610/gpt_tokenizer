@@ -11,7 +11,7 @@ set(FLUTTER_TARGET_PLATFORM windows-x64)
 cmake_minimum_required(VERSION 3.14)
 
 # Project-level configuration.
-set(PROJECT_NAME "flutter_library_name")
+set(PROJECT_NAME "flutter_gpt_toenizer")
 project(${PROJECT_NAME} LANGUAGES CXX)
 
 # Download the binaries if they are not already present.
@@ -36,7 +36,7 @@ execute_process(
 # List of absolute paths to libraries that should be bundled with the plugin.
 # This list could contain prebuilt libraries, or libraries created by an
 # external build triggered from this build file.
-set(flutter_library_name_bundled_libraries
+set(flutter_gpt_tokenizer_bundled_libraries
   "${LibRoot}/${FLUTTER_TARGET_PLATFORM}/gpt_tokenizer.dll"
   PARENT_SCOPE
 )

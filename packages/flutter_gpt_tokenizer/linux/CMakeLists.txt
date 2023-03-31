@@ -31,7 +31,7 @@ execute_process(
 # List of absolute paths to libraries that should be bundled with the plugin.
 # This list could contain prebuilt libraries, or libraries created by an
 # external build triggered from this build file.
-set(flutter_library_name_bundled_libraries
+set(flutter_gpt_tokenizer_bundled_libraries
   "${LibRoot}/${FLUTTER_TARGET_PLATFORM}/libgpt_tokenizer.so"
   PARENT_SCOPE
 )
