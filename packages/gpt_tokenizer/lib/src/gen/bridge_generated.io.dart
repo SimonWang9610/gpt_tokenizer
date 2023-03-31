@@ -18,9 +18,9 @@ class GptTokenizerPlatform extends FlutterRustBridgeBase<GptTokenizerWire> {
 // Section: api2wire
 
   @protected
-  wire_ArcCoreBpe api2wire_ArcCoreBpe(ArcCoreBpe raw) {
-    final ptr = inner.new_ArcCoreBpe();
-    _api_fill_to_wire_ArcCoreBpe(raw, ptr);
+  wire_CoreBpe api2wire_CoreBpe(CoreBpe raw) {
+    final ptr = inner.new_CoreBpe();
+    _api_fill_to_wire_CoreBpe(raw, ptr);
     return ptr;
   }
 
@@ -83,13 +83,12 @@ class GptTokenizerPlatform extends FlutterRustBridgeBase<GptTokenizerWire> {
 
 // Section: finalizer
 
-  late final OpaqueTypeFinalizer _ArcCoreBpeFinalizer =
-      OpaqueTypeFinalizer(inner._drop_opaque_ArcCoreBpePtr);
-  OpaqueTypeFinalizer get ArcCoreBpeFinalizer => _ArcCoreBpeFinalizer;
+  late final OpaqueTypeFinalizer _CoreBpeFinalizer =
+      OpaqueTypeFinalizer(inner._drop_opaque_CoreBpePtr);
+  OpaqueTypeFinalizer get CoreBpeFinalizer => _CoreBpeFinalizer;
 // Section: api_fill_to_wire
 
-  void _api_fill_to_wire_ArcCoreBpe(
-      ArcCoreBpe apiObj, wire_ArcCoreBpe wireObj) {
+  void _api_fill_to_wire_CoreBpe(CoreBpe apiObj, wire_CoreBpe wireObj) {
     wireObj.ptr = apiObj.shareOrMove();
   }
 
@@ -100,7 +99,7 @@ class GptTokenizerPlatform extends FlutterRustBridgeBase<GptTokenizerWire> {
 
   void _api_fill_to_wire_bpe_wrapper(
       BPEWrapper apiObj, wire_BPEWrapper wireObj) {
-    wireObj.bpe = api2wire_ArcCoreBpe(apiObj.bpe);
+    wireObj.bpe = api2wire_CoreBpe(apiObj.bpe);
   }
 
   void _api_fill_to_wire_encoder_map_entry(
@@ -240,6 +239,37 @@ class GptTokenizerWire implements FlutterRustBridgeWireBase {
           void Function(
               int,
               ffi.Pointer<wire_list_encoder_map_entry>,
+              ffi.Pointer<wire_list_special_encoder_map_entry>,
+              ffi.Pointer<wire_uint_8_list>)>();
+
+  void wire_load__static_method__BPEWrapper(
+    int port_,
+    ffi.Pointer<wire_uint_8_list> path,
+    ffi.Pointer<wire_list_special_encoder_map_entry>
+        special_tokens_encoder_entries,
+    ffi.Pointer<wire_uint_8_list> pattern,
+  ) {
+    return _wire_load__static_method__BPEWrapper(
+      port_,
+      path,
+      special_tokens_encoder_entries,
+      pattern,
+    );
+  }
+
+  late final _wire_load__static_method__BPEWrapperPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Int64,
+                  ffi.Pointer<wire_uint_8_list>,
+                  ffi.Pointer<wire_list_special_encoder_map_entry>,
+                  ffi.Pointer<wire_uint_8_list>)>>(
+      'wire_load__static_method__BPEWrapper');
+  late final _wire_load__static_method__BPEWrapper =
+      _wire_load__static_method__BPEWrapperPtr.asFunction<
+          void Function(
+              int,
+              ffi.Pointer<wire_uint_8_list>,
               ffi.Pointer<wire_list_special_encoder_map_entry>,
               ffi.Pointer<wire_uint_8_list>)>();
 
@@ -406,14 +436,14 @@ class GptTokenizerWire implements FlutterRustBridgeWireBase {
       _wire_decode_single_token_bytes__method__BPEWrapperPtr
           .asFunction<void Function(int, ffi.Pointer<wire_BPEWrapper>, int)>();
 
-  wire_ArcCoreBpe new_ArcCoreBpe() {
-    return _new_ArcCoreBpe();
+  wire_CoreBpe new_CoreBpe() {
+    return _new_CoreBpe();
   }
 
-  late final _new_ArcCoreBpePtr =
-      _lookup<ffi.NativeFunction<wire_ArcCoreBpe Function()>>('new_ArcCoreBpe');
-  late final _new_ArcCoreBpe =
-      _new_ArcCoreBpePtr.asFunction<wire_ArcCoreBpe Function()>();
+  late final _new_CoreBpePtr =
+      _lookup<ffi.NativeFunction<wire_CoreBpe Function()>>('new_CoreBpe');
+  late final _new_CoreBpe =
+      _new_CoreBpePtr.asFunction<wire_CoreBpe Function()>();
 
   ffi.Pointer<wire_StringList> new_StringList_0(
     int len,
@@ -501,33 +531,33 @@ class GptTokenizerWire implements FlutterRustBridgeWireBase {
   late final _new_uint_8_list_0 = _new_uint_8_list_0Ptr
       .asFunction<ffi.Pointer<wire_uint_8_list> Function(int)>();
 
-  void drop_opaque_ArcCoreBpe(
+  void drop_opaque_CoreBpe(
     ffi.Pointer<ffi.Void> ptr,
   ) {
-    return _drop_opaque_ArcCoreBpe(
+    return _drop_opaque_CoreBpe(
       ptr,
     );
   }
 
-  late final _drop_opaque_ArcCoreBpePtr =
+  late final _drop_opaque_CoreBpePtr =
       _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Void>)>>(
-          'drop_opaque_ArcCoreBpe');
-  late final _drop_opaque_ArcCoreBpe = _drop_opaque_ArcCoreBpePtr
+          'drop_opaque_CoreBpe');
+  late final _drop_opaque_CoreBpe = _drop_opaque_CoreBpePtr
       .asFunction<void Function(ffi.Pointer<ffi.Void>)>();
 
-  ffi.Pointer<ffi.Void> share_opaque_ArcCoreBpe(
+  ffi.Pointer<ffi.Void> share_opaque_CoreBpe(
     ffi.Pointer<ffi.Void> ptr,
   ) {
-    return _share_opaque_ArcCoreBpe(
+    return _share_opaque_CoreBpe(
       ptr,
     );
   }
 
-  late final _share_opaque_ArcCoreBpePtr = _lookup<
+  late final _share_opaque_CoreBpePtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<ffi.Void> Function(
-              ffi.Pointer<ffi.Void>)>>('share_opaque_ArcCoreBpe');
-  late final _share_opaque_ArcCoreBpe = _share_opaque_ArcCoreBpePtr
+              ffi.Pointer<ffi.Void>)>>('share_opaque_CoreBpe');
+  late final _share_opaque_CoreBpe = _share_opaque_CoreBpePtr
       .asFunction<ffi.Pointer<ffi.Void> Function(ffi.Pointer<ffi.Void>)>();
 
   void free_WireSyncReturn(
@@ -582,12 +612,12 @@ class wire_list_special_encoder_map_entry extends ffi.Struct {
   external int len;
 }
 
-class wire_ArcCoreBpe extends ffi.Struct {
+class wire_CoreBpe extends ffi.Struct {
   external ffi.Pointer<ffi.Void> ptr;
 }
 
 class wire_BPEWrapper extends ffi.Struct {
-  external wire_ArcCoreBpe bpe;
+  external wire_CoreBpe bpe;
 }
 
 class wire_StringList extends ffi.Struct {

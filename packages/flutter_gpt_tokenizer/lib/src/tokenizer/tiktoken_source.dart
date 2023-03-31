@@ -47,6 +47,28 @@ class TikTokenSource {
       return file.readAsLines();
     }
   }
+
+  Future<String> getFilePath() async {
+    final filePath = await getCachePath(url);
+
+    final file = File(filePath);
+
+    if (await file.exists()) {
+      print("file exists at $filePath");
+      return filePath;
+    } else {
+      Dio dio = Dio();
+      await dio.downloadUri(
+        Uri.parse(url),
+        filePath,
+        data: {
+          "Content-Type": "application/octet-stream",
+        },
+      );
+      print("file downloaded to $filePath");
+      return filePath;
+    }
+  }
 }
 
 /// hardcoded TikTokenSource for the models provided by OpenAI, see [modelToEncoding]

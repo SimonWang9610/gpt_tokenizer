@@ -1,5 +1,5 @@
-release_tag_name = 'gpt_tokenizer-v0.0.1' # generated; do not edit
-release_pod_version = '0.0.1' # generated; do not edit
+release_tag_name = 'gpt_tokenizer-v0.1.0' # generated; do not edit
+release_pod_version = '0.1.0' # generated; do not edit
 # We cannot distribute the XCFramework alongside the library directly,
 # so we have to fetch the correct version here.
 framework_name = 'gpt_tokenizer.xcframework'

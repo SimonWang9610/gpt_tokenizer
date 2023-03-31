@@ -39,6 +39,26 @@ Future<BPEWrapper> _createTokenizer({
   return bpeWrapper;
 }
 
+Future<BPEWrapper> _loadTokenizer({
+  required String pattern,
+  required String filePath,
+  required Map<String, int> specialTokens,
+}) async {
+  _impl ??= _loadTokenizerLib();
+
+  final specialEncoderEntries = specialTokens.entries
+      .map((e) => SpecialEncoderMapEntry(key: e.key, value: e.value))
+      .toList();
+
+  final bpeWrapper = await _impl!.loadStaticMethodBpeWrapper(
+    path: filePath,
+    specialTokensEncoderEntries: specialEncoderEntries,
+    pattern: pattern,
+  );
+
+  return bpeWrapper;
+}
+
 class Tokenizer {
   static final _instance = Tokenizer._internal();
 
@@ -140,11 +160,19 @@ class Tokenizer {
     if (_cache.containsKey(source.encodingName)) {
       return _cache[source.encodingName]!;
     } else {
-      final map = await loadEncodingFile(source);
+      // final map = await loadEncodingFile(source);
 
-      final tokenizer = await _createTokenizer(
-        ranks: map,
+      // final tokenizer = await _createTokenizer(
+      //   ranks: map,
+      //   pattern: source.pattern,
+      //   specialTokens: source.specialTokens,
+      // );
+
+      final filePath = await source.getFilePath();
+
+      final tokenizer = await _loadTokenizer(
         pattern: source.pattern,
+        filePath: filePath,
         specialTokens: source.specialTokens,
       );
 

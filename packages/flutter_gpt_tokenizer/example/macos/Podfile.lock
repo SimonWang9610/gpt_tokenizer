@@ -1,5 +1,5 @@
 PODS:
-  - flutter_gpt_tokenizer (0.0.1)
+  - flutter_gpt_tokenizer (0.0.2)
   - FlutterMacOS (1.0.0)
   - path_provider_foundation (0.0.1):
     - Flutter
@@ -19,7 +19,7 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/macos
 
 SPEC CHECKSUMS:
-  flutter_gpt_tokenizer: 7d00809909ce109a765f077fd4184014d4931474
+  flutter_gpt_tokenizer: 99cb37ec9d3d81508b205a48cc9b93d91e0f346b
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
   path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
 

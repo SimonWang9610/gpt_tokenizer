@@ -25,6 +25,14 @@ abstract class GptTokenizer {
 
   FlutterRustBridgeTaskConstMeta get kCreateStaticMethodBpeWrapperConstMeta;
 
+  Future<BPEWrapper> loadStaticMethodBpeWrapper(
+      {required String path,
+      required List<SpecialEncoderMapEntry> specialTokensEncoderEntries,
+      required String pattern,
+      dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta get kLoadStaticMethodBpeWrapperConstMeta;
+
   Future<Uint32List> encodeOrdinaryMethodBpeWrapper(
       {required BPEWrapper that, required String text, dynamic hint});
 
@@ -68,28 +76,28 @@ abstract class GptTokenizer {
   FlutterRustBridgeTaskConstMeta
       get kDecodeSingleTokenBytesMethodBpeWrapperConstMeta;
 
-  DropFnType get dropOpaqueArcCoreBpe;
-  ShareFnType get shareOpaqueArcCoreBpe;
-  OpaqueTypeFinalizer get ArcCoreBpeFinalizer;
+  DropFnType get dropOpaqueCoreBpe;
+  ShareFnType get shareOpaqueCoreBpe;
+  OpaqueTypeFinalizer get CoreBpeFinalizer;
 }
 
 @sealed
-class ArcCoreBpe extends FrbOpaque {
+class CoreBpe extends FrbOpaque {
   final GptTokenizer bridge;
-  ArcCoreBpe.fromRaw(int ptr, int size, this.bridge) : super.unsafe(ptr, size);
+  CoreBpe.fromRaw(int ptr, int size, this.bridge) : super.unsafe(ptr, size);
   @override
-  DropFnType get dropFn => bridge.dropOpaqueArcCoreBpe;
+  DropFnType get dropFn => bridge.dropOpaqueCoreBpe;
 
   @override
-  ShareFnType get shareFn => bridge.shareOpaqueArcCoreBpe;
+  ShareFnType get shareFn => bridge.shareOpaqueCoreBpe;
 
   @override
-  OpaqueTypeFinalizer get staticFinalizer => bridge.ArcCoreBpeFinalizer;
+  OpaqueTypeFinalizer get staticFinalizer => bridge.CoreBpeFinalizer;
 }
 
 class BPEWrapper {
   final GptTokenizer bridge;
-  final ArcCoreBpe bpe;
+  final CoreBpe bpe;
 
   const BPEWrapper({
     required this.bridge,
@@ -104,6 +112,18 @@ class BPEWrapper {
           dynamic hint}) =>
       bridge.createStaticMethodBpeWrapper(
           encoderEntries: encoderEntries,
+          specialTokensEncoderEntries: specialTokensEncoderEntries,
+          pattern: pattern,
+          hint: hint);
+
+  static Future<BPEWrapper> load(
+          {required GptTokenizer bridge,
+          required String path,
+          required List<SpecialEncoderMapEntry> specialTokensEncoderEntries,
+          required String pattern,
+          dynamic hint}) =>
+      bridge.loadStaticMethodBpeWrapper(
+          path: path,
           specialTokensEncoderEntries: specialTokensEncoderEntries,
           pattern: pattern,
           hint: hint);
@@ -212,6 +232,31 @@ class GptTokenizerImpl implements GptTokenizer {
       const FlutterRustBridgeTaskConstMeta(
         debugName: "create__static_method__BPEWrapper",
         argNames: ["encoderEntries", "specialTokensEncoderEntries", "pattern"],
+      );
+
+  Future<BPEWrapper> loadStaticMethodBpeWrapper(
+      {required String path,
+      required List<SpecialEncoderMapEntry> specialTokensEncoderEntries,
+      required String pattern,
+      dynamic hint}) {
+    var arg0 = _platform.api2wire_String(path);
+    var arg1 = _platform
+        .api2wire_list_special_encoder_map_entry(specialTokensEncoderEntries);
+    var arg2 = _platform.api2wire_String(pattern);
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) => _platform.inner
+          .wire_load__static_method__BPEWrapper(port_, arg0, arg1, arg2),
+      parseSuccessData: (d) => _wire2api_bpe_wrapper(d),
+      constMeta: kLoadStaticMethodBpeWrapperConstMeta,
+      argValues: [path, specialTokensEncoderEntries, pattern],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta get kLoadStaticMethodBpeWrapperConstMeta =>
+      const FlutterRustBridgeTaskConstMeta(
+        debugName: "load__static_method__BPEWrapper",
+        argNames: ["path", "specialTokensEncoderEntries", "pattern"],
       );
 
   Future<Uint32List> encodeOrdinaryMethodBpeWrapper(
@@ -365,18 +410,17 @@ class GptTokenizerImpl implements GptTokenizer {
             argNames: ["that", "token"],
           );
 
-  DropFnType get dropOpaqueArcCoreBpe => _platform.inner.drop_opaque_ArcCoreBpe;
-  ShareFnType get shareOpaqueArcCoreBpe =>
-      _platform.inner.share_opaque_ArcCoreBpe;
-  OpaqueTypeFinalizer get ArcCoreBpeFinalizer => _platform.ArcCoreBpeFinalizer;
+  DropFnType get dropOpaqueCoreBpe => _platform.inner.drop_opaque_CoreBpe;
+  ShareFnType get shareOpaqueCoreBpe => _platform.inner.share_opaque_CoreBpe;
+  OpaqueTypeFinalizer get CoreBpeFinalizer => _platform.CoreBpeFinalizer;
 
   void dispose() {
     _platform.dispose();
   }
 // Section: wire2api
 
-  ArcCoreBpe _wire2api_ArcCoreBpe(dynamic raw) {
-    return ArcCoreBpe.fromRaw(raw[0], raw[1], this);
+  CoreBpe _wire2api_CoreBpe(dynamic raw) {
+    return CoreBpe.fromRaw(raw[0], raw[1], this);
   }
 
   Uint32List _wire2api_ZeroCopyBuffer_Uint32List(dynamic raw) {
@@ -393,7 +437,7 @@ class GptTokenizerImpl implements GptTokenizer {
       throw Exception('unexpected arr length: expect 1 but see ${arr.length}');
     return BPEWrapper(
       bridge: this,
-      bpe: _wire2api_ArcCoreBpe(arr[0]),
+      bpe: _wire2api_CoreBpe(arr[0]),
     );
   }
 

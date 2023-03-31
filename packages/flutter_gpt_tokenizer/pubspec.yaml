@@ -1,6 +1,6 @@
 name: flutter_gpt_tokenizer
 description: Counting the tokens for your ChatGPT prompt.
-version: 0.0.1
+version: 0.1.0
 publish_to: none
 homepage:
 
@@ -22,6 +22,9 @@ dependencies:
       url: https://github.com/SimonWang9610/gpt_tokenizer
       path: packages/gpt_tokenizer
       ref: main
+
+  # gpt_tokenizer:
+  #   path: ../gpt_tokenizer
 
 dev_dependencies:
   ffi: ^2.0.1
