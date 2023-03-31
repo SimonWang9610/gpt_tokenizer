@@ -16,7 +16,7 @@ done
 
 # Create XCFramework zip
 FRAMEWORK="gpt_tokenizer.xcframework"
-LIBNAME=libgpt_tokenizer.dylib
+LIBNAME=libgpt_tokenizer.a
 
 mkdir mac-lipo ios-sim-lipo
 IOS_SIM_LIPO=ios-sim-lipo/$LIBNAME
