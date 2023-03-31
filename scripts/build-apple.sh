@@ -16,21 +16,26 @@ done
 
 # Create XCFramework zip
 FRAMEWORK="gpt_tokenizer.xcframework"
-LIBNAME=libgpt_tokenizer.a
+LIBNAME=libgpt_tokenizer.dylib
+
 mkdir mac-lipo ios-sim-lipo
 IOS_SIM_LIPO=ios-sim-lipo/$LIBNAME
 MAC_LIPO=mac-lipo/$LIBNAME
+
 lipo -create -output $IOS_SIM_LIPO \
         ../target/aarch64-apple-ios-sim/release/$LIBNAME \
         ../target/x86_64-apple-ios/release/$LIBNAME
 lipo -create -output $MAC_LIPO \
         ../target/aarch64-apple-darwin/release/$LIBNAME \
         ../target/x86_64-apple-darwin/release/$LIBNAME
+        
 xcodebuild -create-xcframework \
         -library $IOS_SIM_LIPO \
         -library $MAC_LIPO \
         -library ../target/aarch64-apple-ios/release/$LIBNAME \
         -output $FRAMEWORK
+
+
 zip -r $FRAMEWORK.zip $FRAMEWORK
 
 if [ "$1" == "debug" ]; then
