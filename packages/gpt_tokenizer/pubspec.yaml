@@ -1,7 +1,7 @@
 name: gpt_tokenizer
 description: A starting point for Dart libraries or applications.
 version: 0.1.0
-# repository: https://github.com/my_org/my_repo
+repository: https://github.com/SimonWang9610/gpt_tokenizer/tree/main/packages/gpt_tokenizer
 
 environment:
   sdk: ">=2.18.0 < 3.0.0"
@@ -17,3 +17,4 @@ dev_dependencies:
 dependencies:
   ffi: ^2.0.1
   flutter_rust_bridge: ^1.72.1
+  meta: ^1.8.0

@@ -6,7 +6,6 @@ import 'dart:convert';
 import 'dart:async';
 import 'package:meta/meta.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge.dart';
-import 'package:uuid/uuid.dart';
 import 'bridge_generated.dart';
 export 'bridge_generated.dart';
 
@@ -133,8 +132,10 @@ class GptTokenizerWasmModule implements WasmModule {
       wire_decode_single_token_bytes__method__BPEWrapper(
           NativePortType port_, List<dynamic> that, int token);
 
+  // ignore: inference_failure_on_untyped_parameter
   external dynamic /*  */ drop_opaque_CoreBpe(ptr);
 
+  // ignore: inference_failure_on_untyped_parameter
   external int /* *const c_void */ share_opaque_CoreBpe(ptr);
 }
 
@@ -193,9 +194,11 @@ class GptTokenizerWire
       wasmModule.wire_decode_single_token_bytes__method__BPEWrapper(
           port_, that, token);
 
+  // ignore: inference_failure_on_untyped_parameter
   dynamic /*  */ drop_opaque_CoreBpe(ptr) =>
       wasmModule.drop_opaque_CoreBpe(ptr);
 
+  // ignore: inference_failure_on_untyped_parameter
   int /* *const c_void */ share_opaque_CoreBpe(ptr) =>
       wasmModule.share_opaque_CoreBpe(ptr);
 }
