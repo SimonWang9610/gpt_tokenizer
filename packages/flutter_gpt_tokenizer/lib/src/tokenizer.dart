@@ -15,30 +15,6 @@ GptTokenizerImpl _loadTokenizerLib() {
 
 GptTokenizerImpl? _impl;
 
-Future<BPEWrapper> _createTokenizer({
-  required String pattern,
-  required Map<Uint8List, int> ranks,
-  required Map<String, int> specialTokens,
-}) async {
-  _impl ??= _loadTokenizerLib();
-
-  final encoderEntries = ranks.entries
-      .map((e) => EncoderMapEntry(key: e.key, value: e.value))
-      .toList();
-
-  final specialEncoderEntries = specialTokens.entries
-      .map((e) => SpecialEncoderMapEntry(key: e.key, value: e.value))
-      .toList();
-
-  final bpeWrapper = await _impl!.createStaticMethodBpeWrapper(
-    encoderEntries: encoderEntries,
-    specialTokensEncoderEntries: specialEncoderEntries,
-    pattern: pattern,
-  );
-
-  return bpeWrapper;
-}
-
 Future<BPEWrapper> _loadTokenizer({
   required String pattern,
   required String filePath,

@@ -29,6 +29,24 @@ final count = await Tokenizer().count(
 );
 ```
 
+The tokenizer for different `modelName` would be cached, so it would only initialize once for a different `modelName`. Therefore, remembering to dispose `Tokenizer` once you do not need using them:
+
+```dart
+Tokenizer().dispose()
+```
+
+## Design
+
+This package utilizes [flutter_rust_bridge](https://pub.dev/packages/flutter_rust_bridge) to bridge the BPE algorithm of OpenAI to your flutter application.
+
+### Load and cache `tiktoken` file
+
+When you first use `Tokenizer()`, it would try to load and cache the tiktoken file for the specific `modelName` from the public endpoints of OpenAI
+
+### Initialize the instance `BPEWrapper` for a specific `modelName`
+
+If the `BPEWrapper` for a specific `modelName` is not found in `Tokenizer()`, it would notify the rust side to read its tiktoken file and then construct an instance of `BPEWrapper` for the specific `modelName`, so that the flutter/dart side could use the ability to `encode/decode/count` for your ChatGPT prompt.
+
 ## Supported models:
 
 > `gpt-4-*` and `gpt-3.5-turbo-*` are also supported

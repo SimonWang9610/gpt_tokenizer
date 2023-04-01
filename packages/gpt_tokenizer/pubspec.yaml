@@ -1,5 +1,5 @@
 name: gpt_tokenizer
-description: A starting point for Dart libraries or applications.
+description: The implementation of BPE algorithm for sentence encode/decode
 version: 0.1.0
 repository: https://github.com/SimonWang9610/gpt_tokenizer/tree/main/packages/gpt_tokenizer
 

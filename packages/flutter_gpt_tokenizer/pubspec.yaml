@@ -1,8 +1,7 @@
 name: flutter_gpt_tokenizer
-description: Counting the tokens for your ChatGPT prompt.
+description: Encode/decode/count the tokens for your ChatGPT prompt(sentence/words).
 version: 0.1.0
-publish_to: none
-homepage:
+homepage: https://github.com/SimonWang9610/gpt_tokenizer/tree/main/packages/flutter_gpt_tokenizer
 
 environment:
   sdk: ">=2.18.0 <3.0.0"
@@ -16,12 +15,13 @@ dependencies:
   dio: ^5.1.0
   crypto: ^3.0.2
   path_provider: ^2.0.14
+  gpt_tokenizer: ^0.1.0
 
-  gpt_tokenizer:
-    git:
-      url: https://github.com/SimonWang9610/gpt_tokenizer
-      path: packages/gpt_tokenizer
-      ref: bc34bf999c2d8e84cc158d476173dccfa6f0cc33
+  # gpt_tokenizer:
+  #   git:
+  #     url: https://github.com/SimonWang9610/gpt_tokenizer
+  #     path: packages/gpt_tokenizer
+  #     ref: bc34bf999c2d8e84cc158d476173dccfa6f0cc33
 
   # gpt_tokenizer:
   #   path: ../gpt_tokenizer

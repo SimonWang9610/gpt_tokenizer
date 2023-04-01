@@ -48,13 +48,15 @@ class TikTokenSource {
     }
   }
 
+  /// ensure the tiktoken file is cached,
+  /// if not, download it from the [url]
+  /// the returned file path would be used at the rust side
   Future<String> getFilePath() async {
     final filePath = await getCachePath(url);
 
     final file = File(filePath);
 
     if (await file.exists()) {
-      print("file exists at $filePath");
       return filePath;
     } else {
       Dio dio = Dio();
@@ -65,7 +67,6 @@ class TikTokenSource {
           "Content-Type": "application/octet-stream",
         },
       );
-      print("file downloaded to $filePath");
       return filePath;
     }
   }
