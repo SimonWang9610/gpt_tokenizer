@@ -222,6 +222,7 @@ class GptTokenizerImpl implements GptTokenizer {
       constMeta: kCreateStaticMethodBpeWrapperConstMeta,
       argValues: [encoderEntries, specialTokensEncoderEntries, pattern],
       hint: hint,
+      parseErrorData: null,
     ));
   }
 
@@ -247,6 +248,7 @@ class GptTokenizerImpl implements GptTokenizer {
       constMeta: kLoadStaticMethodBpeWrapperConstMeta,
       argValues: [path, specialTokensEncoderEntries, pattern],
       hint: hint,
+      parseErrorData: null,
     ));
   }
 
@@ -267,6 +269,7 @@ class GptTokenizerImpl implements GptTokenizer {
       constMeta: kEncodeOrdinaryMethodBpeWrapperConstMeta,
       argValues: [that, text],
       hint: hint,
+      parseErrorData: null,
     ));
   }
 
@@ -291,6 +294,7 @@ class GptTokenizerImpl implements GptTokenizer {
       constMeta: kEncodeMethodBpeWrapperConstMeta,
       argValues: [that, text, allowedSpecialEntries],
       hint: hint,
+      parseErrorData: null,
     ));
   }
 
@@ -315,6 +319,7 @@ class GptTokenizerImpl implements GptTokenizer {
       constMeta: kCountTokenMethodBpeWrapperConstMeta,
       argValues: [that, text, allowedSpecialEntries],
       hint: hint,
+      parseErrorData: null,
     ));
   }
 
@@ -335,6 +340,7 @@ class GptTokenizerImpl implements GptTokenizer {
       constMeta: kEncodeBytesMethodBpeWrapperConstMeta,
       argValues: [that, bytes],
       hint: hint,
+      parseErrorData: null,
     ));
   }
 
@@ -355,6 +361,7 @@ class GptTokenizerImpl implements GptTokenizer {
       constMeta: kEncodeSingleTokenMethodBpeWrapperConstMeta,
       argValues: [that, piece],
       hint: hint,
+      parseErrorData: null,
     ));
   }
 
@@ -376,6 +383,7 @@ class GptTokenizerImpl implements GptTokenizer {
       constMeta: kDecodeBytesMethodBpeWrapperConstMeta,
       argValues: [that, tokens],
       hint: hint,
+      parseErrorData: null,
     ));
   }
 
@@ -397,6 +405,7 @@ class GptTokenizerImpl implements GptTokenizer {
       constMeta: kDecodeSingleTokenBytesMethodBpeWrapperConstMeta,
       argValues: [that, token],
       hint: hint,
+      parseErrorData: null,
     ));
   }
 
