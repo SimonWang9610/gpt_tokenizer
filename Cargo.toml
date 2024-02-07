@@ -1,5 +1,6 @@
 [workspace]
 members = ["packages/gpt_tokenizer/tokenizer"]
+resolver = "2"
 
 [profile.release]
 strip = true

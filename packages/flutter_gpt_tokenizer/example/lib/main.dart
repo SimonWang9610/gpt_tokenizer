@@ -101,23 +101,30 @@ class _MyAppState extends State<MyApp> {
 
   void _encode() async {
     final text = _controller.text;
-    final encoded = await Tokenizer().encode(
+    Tokenizer()
+        .encode(
       text,
       modelName: _currentModel,
-    );
+    )
+        .then((encoded) async {
+      print("Encoded: $encoded");
+      final decoded = await Tokenizer()
+          .decode(Uint32List.fromList(encoded), modelName: _currentModel);
 
-    final decoded = await Tokenizer()
-        .decode(Uint32List.fromList(encoded), modelName: _currentModel);
+      final count = await Tokenizer().count(
+        text,
+        modelName: _currentModel,
+      );
 
-    final count = await Tokenizer().count(
-      text,
-      modelName: _currentModel,
-    );
+      setState(() {
+        _encoded = encoded;
+        _decoded = decoded;
+        _count = count;
+      });
+    });
 
-    setState(() {
-      _encoded = encoded;
-      _decoded = decoded;
-      _count = count;
+    Tokenizer().encode("$text, copy", modelName: _currentModel).then((encoded) {
+      print("Encoded copy: $encoded");
     });
   }
 
