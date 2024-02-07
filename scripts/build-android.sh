@@ -1,5 +1,5 @@
 #!/bin/bash
-DEBUGZIP="gpt_tokenizer-v0.1.0.tar.gz" # generated; do not edit
+DEBUGZIP="gpt_tokenizer-v0.1.1.tar.gz" # generated; do not edit
 # Setup
 BUILD_DIR=platform-build
 mkdir $BUILD_DIR

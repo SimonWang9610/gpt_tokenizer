@@ -1,7 +1,8 @@
 [package]
 name = "gpt_tokenizer"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
+
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -9,15 +10,15 @@ edition = "2021"
 crate-type = ["staticlib", "cdylib", "lib"]
 
 [build-dependencies]
-flutter_rust_bridge_codegen = "1"
+flutter_rust_bridge_codegen = "1.82.6"
 
 
 [dependencies]
-flutter_rust_bridge = "1"
+flutter_rust_bridge = "1.82.6"
 fancy-regex = "0.11.0"
 regex = "1.7.0"
 rustc-hash = "1.1.0"
 bstr = "1.0.1"
 base64 = "0.21.0"
 
-anyhow = {  features = ["backtrace"] }
+anyhow = { features = ["backtrace"] }

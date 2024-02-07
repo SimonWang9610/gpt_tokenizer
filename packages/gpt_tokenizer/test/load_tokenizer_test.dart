@@ -67,7 +67,7 @@ void main() async {
 }
 
 GptTokenizerImpl loadLibraryFromPath(String path) {
-  return loadTokenizerImpl(loadDylib(path));
+  return loadTokenizerImpl(loadLibForDart(path));
 }
 
 Future<Map<Uint8List, int>> loadLocalTestFile() async {

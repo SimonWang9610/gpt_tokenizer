@@ -51,6 +51,10 @@ class Tokenizer {
     required String modelName,
     List<String> allowedSpecialTokens = const [],
   }) async {
+    if (text.isEmpty) {
+      return [];
+    }
+
     final tokenizer = await _getTokenizer(modelName);
     return tokenizer.encode(
       text: text,
@@ -64,6 +68,10 @@ class Tokenizer {
     String token, {
     required String modelName,
   }) async {
+    if (token.isEmpty) {
+      return -1;
+    }
+
     final bytes = utf8.encode(token);
     final tokenizer = await _getTokenizer(modelName);
 
@@ -79,6 +87,10 @@ class Tokenizer {
     required String modelName,
     List<String> allowedSpecialTokens = const [],
   }) async {
+    if (text.isEmpty) {
+      return 0;
+    }
+
     final tokenizer = await _getTokenizer(modelName);
     return tokenizer.countToken(
       text: text,
