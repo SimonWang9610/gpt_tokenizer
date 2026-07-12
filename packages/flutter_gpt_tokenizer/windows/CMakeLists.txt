@@ -22,7 +22,10 @@ set(PROJECT_NAME "flutter_gpt_toenizer")
 project(${PROJECT_NAME} LANGUAGES CXX)
 
 # Download the binaries if they are not already present.
-set(LibRoot "${CMAKE_CURRENT_SOURCE_DIR}/${LibraryVersion}")
+# Resolve symlinks (Flutter's .plugin_symlinks) so that archive extraction is
+# not rejected by CMake's secure symlink check.
+file(REAL_PATH "${CMAKE_CURRENT_SOURCE_DIR}" _flutter_gpt_tokenizer_real_dir)
+set(LibRoot "${_flutter_gpt_tokenizer_real_dir}/${LibraryVersion}")
 set(ArchivePath "${LibRoot}.tar.gz")
 if(NOT EXISTS ${ArchivePath})
   file(DOWNLOAD
