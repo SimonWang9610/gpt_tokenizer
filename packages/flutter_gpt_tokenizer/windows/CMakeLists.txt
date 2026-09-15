@@ -1,8 +1,15 @@
 set(LibraryVersion "gpt_tokenizer-v0.1.1") # generated; do not edit
 
-# TODO Remove this workaround once Flutter supports Windows ARM.
-# https://github.com/flutter/flutter/issues/116196
-set(FLUTTER_TARGET_PLATFORM windows-x64)
+# Determine the target platform from the architecture when the Flutter tool
+# does not provide it. The release archive ships both windows-x64 and
+# windows-arm64 binaries.
+if(NOT DEFINED FLUTTER_TARGET_PLATFORM)
+  if(CMAKE_SYSTEM_PROCESSOR STREQUAL "ARM64")
+    set(FLUTTER_TARGET_PLATFORM windows-arm64)
+  else()
+    set(FLUTTER_TARGET_PLATFORM windows-x64)
+  endif()
+endif()
 
 # The Flutter tooling requires that developers have a version of Visual Studio
 # installed that includes CMake 3.14 or later. You should not increase this
@@ -15,7 +22,10 @@ set(PROJECT_NAME "flutter_gpt_toenizer")
 project(${PROJECT_NAME} LANGUAGES CXX)
 
 # Download the binaries if they are not already present.
-set(LibRoot "${CMAKE_CURRENT_SOURCE_DIR}/${LibraryVersion}")
+# Resolve symlinks (Flutter's .plugin_symlinks) so that archive extraction is
+# not rejected by CMake's secure symlink check.
+file(REAL_PATH "${CMAKE_CURRENT_SOURCE_DIR}" _flutter_gpt_tokenizer_real_dir)
+set(LibRoot "${_flutter_gpt_tokenizer_real_dir}/${LibraryVersion}")
 set(ArchivePath "${LibRoot}.tar.gz")
 if(NOT EXISTS ${ArchivePath})
   file(DOWNLOAD
